@@ -411,21 +411,21 @@ export default function Blank() {
                   <div className="flex flex-col">
                     <span className=" font-[800] text-right">
                       min{" "}
-                      {option === 0
+                      {index === 0
                         ? 100
-                        : option === 1
+                        : index === 1
                         ? 1001
-                        : option === 2
+                        : index === 2
                         ? 2001
                         : ""}
                     </span>
                     <span className=" font-[800] text-right">
                       max:{" "}
-                      {option === 0
+                      {index === 0
                         ? 1000
-                        : option === 1
+                        : index === 1
                         ? 2001
-                        : option === 2
+                        : index === 2
                         ? 5000
                         : ""}
                     </span>
@@ -474,6 +474,7 @@ export default function Blank() {
                       <FilledButton
                         className="w-3/4 text-base py-3 font-semibold bg-[#182b48] float-right rounded-2xl"
                         onClick={() => {
+                          setOption(index);
                           onApprove();
                           const stakingLimits = [
                             { min: 100, max: 1000 },
