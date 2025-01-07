@@ -27,7 +27,7 @@ import {
 } from "../hooks/useContract";
 import CustomDialog from "../components/dialogs/CustomDialog";
 import LoadingDialog from "../components/dialogs/LoadingDialog";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const chainId = process.env.REACT_APP_CHAIN_ID;
 const CONTRACT_ADDRESS = Contrats.swap.address as `0x${string}`;
@@ -61,7 +61,7 @@ export default function Blank() {
   const [visible, setVisible] = useState<boolean>(false);
   const [sourceToken, setSource] = useState<IToken>(TOKENS[0]);
   const [targetToken, setTarget] = useState<IToken>(TOKENS[1]);
-  const [isApproved, setIsApproved] = useState(false);
+  const [isApproved, setIsApproved] = useState(true);
   const [loadingVisible, setLoadingVisible] = useState(false);
 
   const { open } = useWeb3Modal();
@@ -167,7 +167,7 @@ export default function Blank() {
     if (allowanceData.data) {
       let allowData: any = formatUnits(allowanceData.data, 18);
       if (parseInt(allowData) > 0) setIsApproved(true);
-      else setIsApproved(false);
+      else setIsApproved(true);
     }
   }, [allowanceData]);
 
@@ -274,7 +274,7 @@ export default function Blank() {
       // stakeDay: secondOption && secondOption.data?.at(4).toString(),
       stakeDay: 270,
       // currentApy: secondOption && secondOption.data?.at(3).toString(),
-      currentApy:"60",
+      currentApy: "60",
       youStaked: Math.round(
         parseFloat(
           formatUnits(
@@ -394,7 +394,7 @@ export default function Blank() {
                 </div>
                 <div className="flex flex-row justify-between">
                   <div className="flex justify-between w-full items-center">
-                    <span className="opacity-60">Will Be Locked</span>
+                    <span className="opacity-60">Staking Duration</span>
                     <div className="text-base  px-4 py-2 font-semibold bg-[#182b48] rounded-md normal-case">
                       {stake.stakeDay} days
                     </div>
@@ -407,9 +407,35 @@ export default function Blank() {
                 </div>
 
                 <div className="flex flex-row justify-between  opacity-60 text-[16px]">
+                  <span>Rewards Paid Weekly</span>
+                  <div className="flex flex-col">
+                    <span className=" font-[800] text-right">
+                      min{" "}
+                      {option === 0
+                        ? 100
+                        : option === 1
+                        ? 1001
+                        : option === 2
+                        ? 2001
+                        : ""}
+                    </span>
+                    <span className=" font-[800] text-right">
+                      max:{" "}
+                      {option === 0
+                        ? 1000
+                        : option === 1
+                        ? 2001
+                        : option === 2
+                        ? 5000
+                        : ""}
+                    </span>
+                  </div>
+                </div>
+
+                {/* <div className="flex flex-row justify-between  opacity-60 text-[16px]">
                   <span>Earn:</span>
                   <span>GuardAI</span>
-                </div>
+                </div> */}
 
                 <div className="flex flex-row justify-between  opacity-60 text-[16px]">
                   <span>GuardAI Staked</span>
@@ -434,15 +460,51 @@ export default function Blank() {
                       Connect Wallet
                     </FilledButton>
                   ) : isApproved ? (
-                    <FilledButton
-                      className="w-full text-base py-3 font-semibold bg-[#182b48]"
-                      onClick={() => {
-                        onStake();
-                        setOption(index);
-                      }}
-                    >
-                      Stake Now
-                    </FilledButton>
+                    <div>
+                      <div className="flex flex-row items-center justify-center mb-4 gap-4">
+                        <span>Amount: </span>
+                        <input
+                          className="w-full h-[40px] border-[1px] rounded-[2px] px-[10px] bg-[#182b48]"
+                          onChange={(e: any) => {
+                            setStakingAmount(e.target.value);
+                          }}
+                        />
+                      </div>
+
+                      <FilledButton
+                        className="w-3/4 text-base py-3 font-semibold bg-[#182b48] float-right rounded-2xl"
+                        onClick={() => {
+                          onApprove();
+                          const stakingLimits = [
+                            { min: 100, max: 1000 },
+                            { min: 1001, max: 2000 },
+                            { min: 2001, max: 5000 },
+                          ];
+
+                          if (index >= 0 && index < stakingLimits.length) {
+                            const { min, max } = stakingLimits[index];
+
+                            if (stakingAmount < min) {
+                              toast.error(
+                                `Staking amount must be at least ${min}.`
+                              );
+                            } else if (stakingAmount > max) {
+                              toast.error(
+                                `Staking amount must be less than ${max}.`
+                              );
+                            } else {
+                              setVisible(false);
+                              setLoadingVisible(true);
+                              stakingData.write && stakingData.write();
+                            }
+                          } else {
+                            toast.error("Invalid option selected.");
+                          }
+                        }}
+                      >
+                        Stake Now
+                      </FilledButton>
+                    </div>
                   ) : (
                     <FilledButton
                       className="w-full text-base py-3 font-semibold bg-[#182b48]"
@@ -462,13 +524,13 @@ export default function Blank() {
                   <span>You Reward:</span>
                   <span>{stake.pendingAmount} GuardAI</span>
                 </div>
-
+                {/* 
                 <div className="flex flex-row justify-between opacity-60 text-[16px]">
                   <span>Total Staked In Pool:</span>
                   <span className="font-[700] ">
                     {stake.totalStakedPool} GuardAI
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -491,12 +553,12 @@ export default function Blank() {
               const stakingLimits = [
                 { min: 100, max: 1000 },
                 { min: 1001, max: 2000 },
-                { min: 2001, max: 5000 }
+                { min: 2001, max: 5000 },
               ];
 
               if (option >= 0 && option < stakingLimits.length) {
                 const { min, max } = stakingLimits[option];
-            
+
                 if (stakingAmount < min) {
                   toast.error(`Staking amount must be at least ${min}.`);
                 } else if (stakingAmount > max) {
