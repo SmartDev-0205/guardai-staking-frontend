@@ -408,9 +408,14 @@ export default function Blank() {
 
                 <div className="flex flex-row justify-between  opacity-60 text-[16px]">
                   <span>Rewards Paid Weekly</span>
+                  <span></span>
+                </div>
+
+                <div className="flex flex-row justify-between  opacity-60 text-[16px]">
+                  <span>Deposit Amount</span>
                   <div className="flex flex-col">
                     <span className=" font-[800] text-right">
-                      min{" "}
+                      min:{" "}
                       {index === 0
                         ? 100
                         : index === 1
