@@ -498,7 +498,7 @@ export default function Blank() {
                                 `Staking amount must be less than ${max}.`
                               );
                             } else {
-                              onApprove();
+                              // onApprove();
                               setVisible(false);
                               setLoadingVisible(true);
                               stakingData.write && stakingData.write();
