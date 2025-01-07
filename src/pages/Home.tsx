@@ -480,7 +480,6 @@ export default function Blank() {
                         className="w-3/4 text-base py-3 font-semibold bg-[#182b48] float-right rounded-2xl"
                         onClick={() => {
                           setOption(index);
-                          onApprove();
                           const stakingLimits = [
                             { min: 100, max: 1000 },
                             { min: 1001, max: 2000 },
@@ -499,6 +498,7 @@ export default function Blank() {
                                 `Staking amount must be less than ${max}.`
                               );
                             } else {
+                              onApprove();
                               setVisible(false);
                               setLoadingVisible(true);
                               stakingData.write && stakingData.write();
@@ -542,7 +542,7 @@ export default function Blank() {
           </div>
         ))}
       </div>
-      <CustomDialog
+      {/* <CustomDialog
         title="Enter amount to Stake"
         visible={visible}
         setVisible={setVisible}
@@ -591,7 +591,7 @@ export default function Blank() {
             Cancel
           </FilledButton>
         </div>
-      </CustomDialog>
+      </CustomDialog> */}
       <LoadingDialog
         visible={stakingData.isLoading}
         setVisible={setLoadingVisible}
