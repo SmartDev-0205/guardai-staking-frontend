@@ -429,7 +429,7 @@ export default function Blank() {
                       {index === 0
                         ? 1000
                         : index === 1
-                        ? 2001
+                        ? 2000
                         : index === 2
                         ? 5000
                         : ""}
