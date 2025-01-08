@@ -371,12 +371,6 @@ export default function Blank() {
             )}
           </div>
         </Container>
-
-        <FilledButton className=" font-bold text-sm !px-2 !py-1 text-base font-semibold bg-[#182b48]">
-          <a href="https://staking.buyguard.io/" target="_blank">
-            New staking
-          </a>
-        </FilledButton>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 h-fit pt-6 pb-4 gap-10">
@@ -406,13 +400,13 @@ export default function Blank() {
                   <span>{stake.currentApy} %</span>
                 </div>
 
-                <div className="flex flex-row justify-between  opacity-60 text-[16px]">
+                {/* <div className="flex flex-row justify-between  opacity-60 text-[16px]">
                   <span>Rewards Paid Weekly</span>
                   <span></span>
-                </div>
+                </div> */}
 
                 <div className="flex flex-row justify-between  opacity-60 text-[16px]">
-                  <span>Deposit Amount</span>
+                  <span>Rewards Paid Weekly</span>
                   <div className="flex flex-col">
                     <span className=" font-[800] text-right">
                       min:{" "}
@@ -442,12 +436,12 @@ export default function Blank() {
                   <span>GuardAI</span>
                 </div> */}
 
-                <div className="flex flex-row justify-between  opacity-60 text-[16px]">
+                {/* <div className="flex flex-row justify-between  opacity-60 text-[16px]">
                   <span>GuardAI Staked</span>
                   <span className="text-[#ff4500]  font-[800]">
                     In Progress
                   </span>
-                </div>
+                </div> */}
 
                 <div className="my-8">
                   {stake.canClaim && parseFloat(stake.pendingAmount) > 0 ? (
